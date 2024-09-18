@@ -1,0 +1,29 @@
+# import serial
+# #아두이노의 시리얼 모니터 창은 종료 필수
+
+# ser = serial.Serial('COM3', baudrate=9600, timeout=1)
+
+# while 1:
+#     arduinoData = ser.readline().decode('ascii')
+#     print(arduinoData)
+
+----------------------------------------------------------------------------------------
+
+### 아두이노에서 특정 문자열을 입력할 때만 센서 데이터가 출력된다.
+## 이 때 파이썬에서도 특정 문자열을 입력할 때만 데이터 출력가능하도록 설정
+# 아두이노의 시리얼 모니터 창이든 vs code의 터미널 창이든 둘 중에 하나만 켜져 있어야 함
+
+import serial
+
+ser = serial.Serial('COM3', baudrate=9600, timeout=1)
+
+def getValue():
+    ser.write(b'g') # 시리얼 통신을 통해서 바이트 데이터인 g 보내기
+    arduinoData = ser.readline().decode('ascii')
+    return arduinoData
+    # 읽어온 바이트 데이터를 ASCII 문자열로 반환하고 arduinoData라는 변수에 할당
+
+while 1:
+    userInput = input("GET DATA : ")
+    if userInput == 'y':
+        print(getValue())
